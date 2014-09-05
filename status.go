@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os/user"
 	"path/filepath"
+	"regexp"
 )
 
 type MachineIndex struct {
@@ -44,9 +45,13 @@ func GlobalStatus() {
 		fmt.Printf("%v\n", err)
 		return
 	}
-	fmt.Printf("%s\n", string(file))
 
 	var machineIndex MachineIndex
 	json.Unmarshal(file, &machineIndex)
-	fmt.Printf("Results: %v\n", machineIndex)
+
+	re := regexp.MustCompile("[a-z0-9]{7}")
+	for id, m := range machineIndex.Machines {
+		fmt.Printf("%s %s %s %s %s\n", re.FindString(id), m.Name, m.Provider, m.State, m.VagrantfilePath)
+	}
+
 }
