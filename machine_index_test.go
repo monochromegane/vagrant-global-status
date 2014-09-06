@@ -12,7 +12,7 @@ func TestGlobalStatuses(t *testing.T) {
 				"local_data_path":"/Users/user-a/.vagrant",
 				"name":"default",
 				"provider":"virtualbox",
-				"state":"poweroff",
+				"state":"running",
 				"vagrantfile_name":null,
 				"vagrantfile_path":"/Users/user-a/vagrant",
 				"updated_at":null,
@@ -26,7 +26,7 @@ func TestGlobalStatuses(t *testing.T) {
 			},
 			"b0123456789012345678901234567890":{
 				"local_data_path":"/Users/user-b/.vagrant",
-				"name":"default",
+				"name":"development",
 				"provider":"virtualbox",
 				"state":"poweroff",
 				"vagrantfile_name":null,
@@ -52,8 +52,8 @@ func TestGlobalStatuses(t *testing.T) {
 	}
 
 	expect := []string{
-		"a012345 default virtualbox poweroff /Users/user-a/vagrant",
-		"b012345 default virtualbox poweroff /Users/user-b/vagrant",
+		"a012345  default     virtualbox running  /Users/user-a/vagrant",
+		"b012345  development virtualbox poweroff /Users/user-b/vagrant",
 	}
 	for i, status := range statuses {
 		if status != expect[i] {

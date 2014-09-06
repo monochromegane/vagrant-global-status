@@ -16,3 +16,13 @@ func homeDir() string {
 	}
 	return homeDir
 }
+
+func getLongLen(i1, i2 int) int {
+	if i1 > i2 {
+		return i1
+	} else if i1 < i2 {
+		return i2
+	} else {
+		return i2
+	}
+}

@@ -55,7 +55,7 @@ func (mi MachineIndex) GlobalStatuses() []string {
 	var statuses []string
 	for id, m := range mi.Machines {
 		statuses = append(statuses,
-			fmt.Sprintf("%s %s %s %s %s",
+			fmt.Sprintf(mi.formatString(),
 				id.toShort(),
 				m.Name,
 				m.Provider,
@@ -64,6 +64,29 @@ func (mi MachineIndex) GlobalStatuses() []string {
 			))
 	}
 	return statuses
+}
+
+func (mi MachineIndex) formatString() string {
+	max := mi.maxColumnLength()
+	return fmt.Sprintf("%%s  %%-%ds %%-%ds %%-%ds %%s",
+		max["name"],
+		max["provider"],
+		max["state"],
+	)
+}
+
+func (mi MachineIndex) maxColumnLength() map[string]int {
+	max := map[string]int{
+		"name":     0,
+		"provider": 0,
+		"state":    0,
+	}
+	for _, m := range mi.Machines {
+		max["name"] = getLongLen(max["name"], len(m.Name))
+		max["provider"] = getLongLen(max["provider"], len(m.Provider))
+		max["state"] = getLongLen(max["state"], len(m.State))
+	}
+	return max
 }
 
 // toShort returns the first 7 characters of the id.
