@@ -1,5 +1,7 @@
 package vagrant
 
+import "encoding/json"
+
 type MachineIndex struct {
 	Version  int                `json:"version"`
 	Machines map[string]Machine `json:"machines"`
@@ -24,4 +26,10 @@ type Box struct {
 	Name     string `json:"name"`
 	Provider string `json:"provider"`
 	Version  string `json:"version"`
+}
+
+func NewMachineIndex(bytes []byte) MachineIndex {
+	var machineIndex MachineIndex
+	json.Unmarshal(bytes, &machineIndex)
+	return machineIndex
 }
