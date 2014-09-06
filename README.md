@@ -46,6 +46,10 @@ $ vagrant-global-status
 
 [![Build Status](https://travis-ci.org/monochromegane/vagrant-global-status.svg?branch=master)](https://travis-ci.org/monochromegane/vagrant-global-status)
 
+## GoDoc
+
+- [GoDoc: vagrant-global-status](https://godoc.org/github.com/monochromegane/vagrant-global-status)
+
 ## Contributing
 
 1. Fork it
