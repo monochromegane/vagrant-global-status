@@ -1,3 +1,4 @@
+// Package vagrant implements functions to provide strings like `vagrant global-status` command output.
 package vagrant
 
 import (
@@ -5,6 +6,7 @@ import (
 	"path/filepath"
 )
 
+// GlobalStatus returns strings like `vagrant global-status` command output.
 func GlobalStatus() ([]string, error) {
 	index, err := readMachineIndex()
 	if err != nil {
