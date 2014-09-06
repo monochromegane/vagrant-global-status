@@ -1,29 +1,19 @@
 package vagrant
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"os/user"
 	"path/filepath"
-	"regexp"
 )
 
-func GlobalStatus() error {
-
+func GlobalStatus() ([]string, error) {
 	index, err := readMachineIndex()
 	if err != nil {
-		return err
+		return []string{}, err
 	}
-
 	machineIndex := NewMachineIndex(index)
-
-	re := regexp.MustCompile("[a-z0-9]{7}")
-	for id, m := range machineIndex.Machines {
-		fmt.Printf("%s %s %s %s %s\n", re.FindString(id), m.Name, m.Provider, m.State, m.VagrantfilePath)
-	}
-	return nil
-
+	return machineIndex.GlobalStatuses(), nil
 }
 
 func readMachineIndex() ([]byte, error) {
