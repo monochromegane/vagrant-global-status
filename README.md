@@ -15,9 +15,20 @@ $ time vagrant-global-status
 vagrant-global-status  0.00s user 0.00s system 68% cpu 0.007 total # fast!!
 ```
 
-## How to use
+## Usage
 
-WIP...
+```console
+$ vagrant-global-status
+3369de2 default virtualbox poweroff /Users/name/vagrant-dir
+```
+
+### With vagrant-peco
+
+If you are using [peco](https://github.com/peco/peco), you can select vagrant-global-status, and execute command !
+
+See: [vagrant-peco](https://github.com/monochromegane/vagrant-peco)
+
+![](https://raw.githubusercontent.com/monochromegane/vagrant-peco/master/images/vagrant-peco-up.gif)
 
 ## Installation
 
@@ -33,12 +44,11 @@ Download from the following url.
 
 - [https://github.com/monochromegane/vagrant-global-status/releases](https://github.com/monochromegane/vagrant-global-status/releases)
 
-## Usage
+### Note
 
-```console
-$ vagrant-global-status
-3369de2 default virtualbox poweroff /Users/name/vagrant-dir
-```
+`vagrant-global-status` depends on the following.
+
+- [Vagrant 1.6 or higher (vagrant global-status)](http://www.vagrantup.com/blog/feature-preview-vagrant-1-6-global-status.html)
 
 ## Code status
 
