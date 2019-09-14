@@ -43,10 +43,13 @@ type Box struct {
 }
 
 // NewMachineIndex returns MachineIndex from bytes of vagrant machine-index contents.
-func NewMachineIndex(bytes []byte) *MachineIndex {
+func NewMachineIndex(bytes []byte) (*MachineIndex, error) {
 	var machineIndex MachineIndex
-	json.Unmarshal(bytes, &machineIndex)
-	return &machineIndex
+	err := json.Unmarshal(bytes, &machineIndex)
+	if err != nil {
+		return nil, err
+	}
+	return &machineIndex, nil
 }
 
 // ToShort returns the first 7 characters of the id.

@@ -48,7 +48,10 @@ func TestGlobalStatuses(t *testing.T) {
 	}
 	`
 
-	mi := NewMachineIndex([]byte(index))
+	mi, err := NewMachineIndex([]byte(index))
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	if len(mi.Machines) != 2 {
 		t.Errorf("It should equal to %d\n", 2)

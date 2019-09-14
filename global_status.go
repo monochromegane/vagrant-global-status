@@ -12,7 +12,7 @@ func GetMachineIndex() (*MachineIndex, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewMachineIndex(index), nil
+	return NewMachineIndex(index)
 }
 
 func readMachineIndex() ([]byte, error) {
