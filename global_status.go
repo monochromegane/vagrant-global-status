@@ -6,14 +6,13 @@ import (
 	"path/filepath"
 )
 
-// GlobalStatus returns strings like `vagrant global-status` command output.
-func GlobalStatus() ([]string, error) {
+// Returns a MachineIndex pointer that can be queried for a list of Vagrant machines
+func GetMachineIndex() (*MachineIndex, error) {
 	index, err := readMachineIndex()
 	if err != nil {
-		return []string{}, err
+		return nil, err
 	}
-	machineIndex := NewMachineIndex(index)
-	return machineIndex.GlobalStatuses(), nil
+	return NewMachineIndex(index), nil
 }
 
 func readMachineIndex() ([]byte, error) {

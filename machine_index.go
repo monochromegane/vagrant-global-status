@@ -2,7 +2,6 @@ package vagrant
 
 import (
 	"encoding/json"
-	"fmt"
 	"regexp"
 )
 
@@ -25,7 +24,7 @@ type Machine struct {
 	Name            string    `json:"name"`
 	Provider        string    `json:"provider"`
 	State           string    `json:"state"`
-	VagrantfileName string    `json"vagrantfile_name"`
+	VagrantfileName string    `json:"vagrantfile_name"`
 	VagrantfilePath string    `json:"vagrantfile_path"`
 	UpdatedAt       string    `json:"updated_at"`
 	ExtraData       ExtraData `json:"extra_data"`
@@ -44,53 +43,35 @@ type Box struct {
 }
 
 // NewMachineIndex returns MachineIndex from bytes of vagrant machine-index contents.
-func NewMachineIndex(bytes []byte) MachineIndex {
+func NewMachineIndex(bytes []byte) *MachineIndex {
 	var machineIndex MachineIndex
 	json.Unmarshal(bytes, &machineIndex)
-	return machineIndex
+	return &machineIndex
 }
 
-// GlobalStatuses returns strings like `vagrant global-status` command output.
-func (mi MachineIndex) GlobalStatuses() []string {
-	var statuses []string
-	for id, m := range mi.Machines {
-		statuses = append(statuses,
-			fmt.Sprintf(mi.formatString(),
-				id.toShort(),
-				m.Name,
-				m.Provider,
-				m.State,
-				m.VagrantfilePath,
-			))
-	}
-	return statuses
-}
-
-func (mi MachineIndex) formatString() string {
-	max := mi.maxColumnLength()
-	return fmt.Sprintf("%%s  %%-%ds %%-%ds %%-%ds %%s",
-		max["name"],
-		max["provider"],
-		max["state"],
-	)
-}
-
-func (mi MachineIndex) maxColumnLength() map[string]int {
-	max := map[string]int{
-		"name":     0,
-		"provider": 0,
-		"state":    0,
-	}
-	for _, m := range mi.Machines {
-		max["name"] = getLongLen(max["name"], len(m.Name))
-		max["provider"] = getLongLen(max["provider"], len(m.Provider))
-		max["state"] = getLongLen(max["state"], len(m.State))
-	}
-	return max
-}
-
-// toShort returns the first 7 characters of the id.
-func (id Id) toShort() string {
+// ToShort returns the first 7 characters of the id.
+func (id Id) ToShort() string {
 	reg := regexp.MustCompile("[a-z0-9]{7}")
 	return reg.FindString(string(id))
+}
+
+// ToShort returns the first 7 characters of the id.
+func (m *Machine) GetDataMap(id *Id) map[string]interface{} {
+	data := map[string]interface{}{
+		"LocalDataPath":   m.LocalDataPath,
+		"Name":            m.Name,
+		"Provider":        m.Provider,
+		"State":           m.State,
+		"VagrantfileName": m.VagrantfileName,
+		"VagrantfilePath": m.VagrantfilePath,
+		"UpdatedAt":       m.UpdatedAt,
+		"ExtraData":       m.ExtraData,
+	}
+
+	if id != nil {
+		data["Id"] = string(*id)
+		data["ShortId"] = id.ToShort()
+	}
+
+	return data
 }
