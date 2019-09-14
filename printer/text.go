@@ -12,7 +12,7 @@ func PrintText(output io.Writer, mi *vagrant.MachineIndex, tmpl string) error {
 
 	var data map[string]interface{}
 	for id, m := range mi.Machines {
-		data = m.GetDataMap(&id)
+		data = getDataMap(&id, &m)
 		err := t.Execute(output, data)
 		if err != nil {
 			return err
